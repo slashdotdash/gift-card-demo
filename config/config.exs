@@ -1,14 +1,16 @@
 use Mix.Config
 
-config :commanded,
-  event_store_adapter: Commanded.EventStore.Adapters.EventStore
+config :commanded, event_store_adapter: Commanded.EventStore.Adapters.EventStore
 
-config :commanded_ecto_projections,
-  repo: GiftCardDemo.Repo
+config :commanded_ecto_projections, repo: GiftCardDemo.Repo
 
 config :gift_card_demo,
   ecto_repos: [GiftCardDemo.Repo],
   generators: [binary_id: true]
+
+config :gift_card_demo, GiftCardDemo.Repo,
+  migration_primary_key: [name: :id, type: :binary_id],
+  migration_source: "ecto_migrations"
 
 # Configures the endpoint
 config :gift_card_demo, GiftCardDemoWeb.Endpoint,

@@ -13,7 +13,6 @@ config :gift_card_demo, GiftCardDemo.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  migration_source: "ecto_migrations",
   pool_size: 5
 
 # For development, we disable any cache and enable

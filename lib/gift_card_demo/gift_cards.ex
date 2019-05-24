@@ -8,14 +8,14 @@ defmodule GiftCardDemo.GiftCards do
     ListGiftCardSummaries.new() |> Repo.all()
   end
 
-  def subscribe_to_gift_card_summaries do
+  def subscribe do
     with {:ok, _} <- Registry.register(Registry.GiftCardSummary, :gift_card_summary, []) do
       :ok
     end
   end
 
-  def issue_gift_card(id, amount) do
-    command = %IssueGiftCard{id: id, amount: amount}
+  def issue_gift_card(amount) do
+    command = %IssueGiftCard{id: UUID.uuid4(), amount: amount}
 
     AppRouter.dispatch(command)
   end

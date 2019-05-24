@@ -1,0 +1,7 @@
+<h2>Gift Cards</h2>
+
+<ul>
+  <%= for summary <- assigns[:gift_cards] do %>
+    <li><%= summary.id %> &mdash; <%= summary.balance %></li>
+  <% end %>
+</ul>

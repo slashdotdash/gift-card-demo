@@ -1,5 +1,5 @@
 defmodule GiftCardDemo.GiftCard.Projections.GiftCardSummaryProjector do
-  use Commanded.Projections.Ecto, name: __MODULE__
+  use Commanded.Projections.Ecto, name: "GiftCardSummaryProjector"
 
   alias GiftCardDemo.GiftCard.Events.{GiftCardIssued, GiftCardRedeemed}
   alias GiftCardDemo.GiftCard.Projections.GiftCardSummary
