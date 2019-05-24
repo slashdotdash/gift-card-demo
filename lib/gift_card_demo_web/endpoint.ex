@@ -1,9 +1,7 @@
 defmodule GiftCardDemoWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :gift_card_demo
 
-  socket "/socket", GiftCardDemoWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+  socket "/live", Phoenix.LiveView.Socket
 
   # Serve at "/" the static files from "priv/static" directory.
   #

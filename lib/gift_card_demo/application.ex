@@ -6,6 +6,7 @@ defmodule GiftCardDemo.Application do
   def start(_type, _args) do
     children = [
       GiftCardDemo.Repo,
+      GiftCardDemo.GiftCard.Supervisor,
       GiftCardDemoWeb.Endpoint
     ]
 

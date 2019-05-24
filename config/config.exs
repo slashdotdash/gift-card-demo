@@ -13,6 +13,9 @@ config :gift_card_demo,
 # Configures the endpoint
 config :gift_card_demo, GiftCardDemoWeb.Endpoint,
   url: [host: "localhost"],
+  live_view: [
+    signing_salt: "RnGHSPQFygXfHbDgURaD/dD9bU8hW8g3"
+  ],
   secret_key_base: "H4y15J/wqxOISIJFRbTI3gRr1KnK+jUkabbyAz14YaLYkmAbFLimliIXTIejta75",
   render_errors: [view: GiftCardDemoWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: GiftCardDemo.PubSub, adapter: Phoenix.PubSub.PG2]

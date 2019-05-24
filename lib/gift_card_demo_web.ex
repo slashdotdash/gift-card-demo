@@ -22,7 +22,9 @@ defmodule GiftCardDemoWeb do
       use Phoenix.Controller, namespace: GiftCardDemoWeb
 
       import Plug.Conn
+      import Phoenix.LiveView.Controller, only: [live_render: 3]
       import GiftCardDemoWeb.Gettext
+
       alias GiftCardDemoWeb.Router.Helpers, as: Routes
     end
   end
@@ -35,12 +37,14 @@ defmodule GiftCardDemoWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
+      import Phoenix.LiveView, only: [live_render: 2, live_render: 3]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
       import GiftCardDemoWeb.ErrorHelpers
       import GiftCardDemoWeb.Gettext
+
       alias GiftCardDemoWeb.Router.Helpers, as: Routes
     end
   end
@@ -48,14 +52,17 @@ defmodule GiftCardDemoWeb do
   def router do
     quote do
       use Phoenix.Router
+
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
+
       import GiftCardDemoWeb.Gettext
     end
   end
