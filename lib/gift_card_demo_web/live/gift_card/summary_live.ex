@@ -1,9 +1,9 @@
-defmodule GiftCardDemoWeb.GiftCardSummaryLive do
+defmodule GiftCardDemoWeb.GiftCard.SummaryLive do
   use Phoenix.LiveView
 
   alias GiftCardDemo.GiftCards
   alias GiftCardDemo.GiftCard.Projections.GiftCardSummary
-  alias GiftCardDemoWeb.GiftCardSummaryView
+  alias GiftCardDemoWeb.GiftCardView
 
   def mount(_session, socket) do
     if connected?(socket), do: GiftCards.subscribe()
@@ -12,7 +12,7 @@ defmodule GiftCardDemoWeb.GiftCardSummaryLive do
   end
 
   def render(assigns) do
-    GiftCardSummaryView.render("index.html", assigns)
+    GiftCardView.render("index.html", assigns)
   end
 
   def handle_info({:gift_card_summary, %GiftCardSummary{}}, socket) do

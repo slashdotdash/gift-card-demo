@@ -11,7 +11,9 @@ There are just two events in the lifecycle of a gift card:
 1. Issued: a new gift card gets created with some amount of money stored.
 2. Redeemed: all or part of the monetary value stored on the gift card is used to purchase something.
 
-## Running the demo locally
+## Running the demo
+
+Requires Elixir 1.8 or later and a Postgres 9.5 or later database.
 
 1. Clone the git repo:
 
@@ -29,6 +31,12 @@ There are just two events in the lifecycle of a gift card:
 
     ```console
     mix setup
+    ```
+
+4. Run Phoenix server:
+
+    ```console
+    iex -S mix phx.server
     ```
 
 ### Database

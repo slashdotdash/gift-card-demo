@@ -1,3 +1,13 @@
-<h1>Welcome!</h1>
+<div class="columns">
+  <div class="column">
+    <%= Phoenix.LiveView.live_render(@conn, GiftCardDemoWeb.GiftCard.IssueLive) %>
+  </div>
 
-<%= Phoenix.LiveView.live_render(@conn, GiftCardDemoWeb.GiftCardSummaryLive) %>
+  <div class="column">
+    <h2 class="title">Bulk Issue Gift Cards</h2>
+  </div>
+</div>
+
+<hr />
+
+<%= Phoenix.LiveView.live_render(@conn, GiftCardDemoWeb.GiftCard.SummaryLive) %>

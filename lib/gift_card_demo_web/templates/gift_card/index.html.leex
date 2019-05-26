@@ -1,0 +1,23 @@
+<h2 class="title">Gift Cards</h2>
+
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Gift card</th>
+      <th class="has-text-centered">Initial amount</th>
+      <th class="has-text-centered">Balance</th>
+      <th />
+  </thead>
+  <tbody>
+    <%= for summary <- @gift_cards do %>
+      <tr>
+        <td><%= summary.id %></td>
+        <td class="has-text-centered"><%= summary.initial_amount %></td>
+        <td class="has-text-centered"><%= summary.balance %></td>
+        <td class="has-text-centered">
+          <a class="button">Redeem</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
