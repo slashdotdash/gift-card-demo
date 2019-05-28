@@ -15,7 +15,7 @@ defmodule GiftCardDemoWeb.GiftCard.SummaryLive do
     GiftCardView.render("index.html", assigns)
   end
 
-  def handle_info({:gift_card_summary, %GiftCardSummary{}}, socket) do
+  def handle_info(%{gift_card_summary: %GiftCardSummary{}}, socket) do
     {:noreply, fetch(socket)}
   end
 

@@ -23,15 +23,11 @@ defmodule GiftCardDemo.GiftCard.Projections.GiftCardSummaryProjector do
   end
 
   @doc """
-  Publish gift card summary after update.
+  Publish changes after update.
   """
-  def after_update(_event, _metadata, %{gift_card_summary: gift_card_summary}) do
-    Registry.dispatch(Registry.GiftCardSummary, :gift_card_summary, fn entries ->
-      for {pid, _} <- entries, do: send(pid, {:gift_card_summary, gift_card_summary})
-    end)
+  def after_update(_event, _metadata, changes) do
+    Phoenix.PubSub.broadcast(GiftCardDemo.PubSub, "gift_cards", changes)
   end
-
-  def after_update(_event, _metadata, _changes), do: :ok
 
   defp gift_card_query(id) do
     from(summary in GiftCardSummary, where: summary.id == ^id)

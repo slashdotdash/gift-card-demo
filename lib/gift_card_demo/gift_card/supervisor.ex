@@ -13,8 +13,6 @@ defmodule GiftCardDemo.GiftCard.Supervisor do
   def init(_arg) do
     Supervisor.init(
       [
-        {Registry,
-         keys: :duplicate, name: Registry.GiftCardSummary, partitions: System.schedulers_online()},
         GiftCardSummaryProjector
       ],
       strategy: :one_for_one

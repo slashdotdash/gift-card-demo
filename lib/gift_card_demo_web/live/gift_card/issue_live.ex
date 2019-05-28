@@ -2,56 +2,35 @@ defmodule GiftCardDemoWeb.GiftCard.IssueLive do
   use Phoenix.LiveView
 
   alias GiftCardDemo.GiftCards
+  alias GiftCardDemo.GiftCard.Commands.IssueGiftCard
   alias GiftCardDemoWeb.GiftCardView
-  alias GiftCardDemoWeb.GiftCard.IssueLive
-  alias GiftCardDemoWeb.Router.Helpers, as: Routes
-
-  defmodule IssueGiftCardForm do
-    use Ecto.Schema
-    import Ecto.Changeset
-
-    embedded_schema do
-      field :amount, :integer
-    end
-
-    def new, do: changeset(%IssueGiftCardForm{id: UUID.uuid4()})
-
-    def changeset(struct, params \\ %{}) do
-      struct
-      |> cast(params, [:id, :amount])
-      |> validate_required([:id, :amount])
-    end
-  end
-
-  alias GiftCardDemoWeb.GiftCard.IssueLive.IssueGiftCardForm
 
   def mount(_session, socket) do
-    {:ok, assign(socket, changeset: IssueGiftCardForm.new())}
+    {:ok, assign(socket, changeset: IssueGiftCard.changeset())}
   end
 
   def render(assigns) do
     GiftCardView.render("new.html", assigns)
   end
 
-  def handle_event("validate", %{"issue_gift_card_form" => params}, socket) do
+  def handle_event("validate", %{"issue_gift_card" => params}, socket) do
     changeset =
-      %IssueGiftCardForm{}
-      |> IssueGiftCardForm.changeset(params)
+      %IssueGiftCard{}
+      |> IssueGiftCard.changeset(params)
       |> Map.put(:action, :dispatch)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("dispatch", %{"issue_gift_card_form" => params}, socket) do
+  def handle_event("dispatch", %{"issue_gift_card" => params}, socket) do
     case GiftCards.issue_gift_card(params) do
       :ok ->
         socket =
           socket
-          |> put_flash(:info, "gift card issued")
+          |> put_flash(:info, "Gift card issued")
+          |> assign(changeset: IssueGiftCard.changeset())
 
-        # |> redirect(to: Routes.live_path(socket, IssueLive))
-
-        {:stop, socket}
+        {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

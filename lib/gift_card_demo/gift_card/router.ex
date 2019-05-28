@@ -1,4 +1,4 @@
-defmodule GiftCardDemo.AppRouter do
+defmodule GiftCardDemo.GiftCard.Router do
   use Commanded.Commands.Router
 
   alias GiftCardDemo.GiftCard

@@ -1,5 +1,5 @@
 defmodule GiftCardDemo.GiftCards do
-  alias GiftCardDemo.AppRouter
+  alias GiftCardDemo.GiftCard.Router
   alias GiftCardDemo.GiftCard.Commands.{IssueGiftCard, RedeemGiftCard}
   alias GiftCardDemo.GiftCard.Queries.ListGiftCardSummaries
   alias GiftCardDemo.Repo
@@ -9,20 +9,28 @@ defmodule GiftCardDemo.GiftCards do
   end
 
   def subscribe do
-    with {:ok, _} <- Registry.register(Registry.GiftCardSummary, :gift_card_summary, []) do
-      :ok
+    Phoenix.PubSub.subscribe(GiftCardDemo.PubSub, "gift_cards")
+  end
+
+  def issue_gift_card(params \\ %{}),
+    do: dispatch_command(IssueGiftCard, params)
+
+  def redeem_gift_card(params \\ %{}),
+    do: dispatch_command(RedeemGiftCard, params)
+
+  defp dispatch_command(module, params) do
+    struct = struct(module)
+    changeset = module.changeset(struct, params)
+
+    if changeset.valid? do
+      command =
+        changeset
+        |> Ecto.Changeset.apply_changes()
+        |> Map.put(:id, UUID.uuid4())
+
+      Router.dispatch(command)
+    else
+      {:error, changeset}
     end
-  end
-
-  def issue_gift_card(amount) do
-    command = %IssueGiftCard{id: UUID.uuid4(), amount: amount}
-
-    AppRouter.dispatch(command)
-  end
-
-  def redeem_gift_card(id, amount) do
-    command = %RedeemGiftCard{id: id, amount: amount}
-
-    AppRouter.dispatch(command)
   end
 end
