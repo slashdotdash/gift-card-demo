@@ -4,8 +4,11 @@ defmodule GiftCardDemoWeb.GiftCard.IssueLive do
   alias GiftCardDemo.GiftCards
   alias GiftCardDemo.GiftCard.Commands.IssueGiftCard
   alias GiftCardDemoWeb.GiftCardView
+  alias GiftCardDemoWeb.GiftCard.IssueLive
+  alias GiftCardDemoWeb.Router.Helpers, as: Routes
 
   def mount(_session, socket) do
+    {:ok, assign(socket, changeset: IssueGiftCard.changeset())}
     {:ok, assign(socket, changeset: IssueGiftCard.changeset())}
   end
 
@@ -27,7 +30,7 @@ defmodule GiftCardDemoWeb.GiftCard.IssueLive do
       :ok ->
         socket =
           socket
-          |> put_flash(:info, "Gift card issued")
+          |> assign(info: "Gift card issued")
           |> assign(changeset: IssueGiftCard.changeset())
 
         {:noreply, socket}
@@ -35,5 +38,9 @@ defmodule GiftCardDemoWeb.GiftCard.IssueLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+  def handle_event("clear", _params, socket) do
+    {:noreply, assign(socket, info: nil)}
   end
 end

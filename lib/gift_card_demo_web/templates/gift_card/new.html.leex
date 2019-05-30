@@ -1,19 +1,25 @@
 <h2 class="title">Issue Gift Card</h2>
 
-<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :dispatch] %>
-  <div class="field">
-    <%= label f, :amount, class: "label" %>
+<%= if assigns[:info] do %>
+  <div class="notification is-success">
+    <button class="delete" phx-click="clear"></button>
 
+    <%= assigns[:info] %>
+  </div>
+<% end %>
+
+<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :dispatch] %>
+  <div class="field has-addons">
     <div class="control">
       <%= text_input f, :amount, class: "input", placeholder: "100" %>
-      <%= error_tag f, :amount %>
-      <p class="help">Enter the gift card amount as a number</p>
     </div>
-  </div>
 
-  <div class="field is-grouped">
     <div class="control">
       <%= submit "Issue", phx_disable_with: "Issuing ...", class: "button is-link" %>
     </div>
   </div>
+
+  <%= error_tag f, :amount %>
+
+  <p class="help">Enter the gift card amount as a number</p>
 </form>
